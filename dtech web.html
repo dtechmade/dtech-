@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DTECH Made</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- ICON LIBRARY -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',sans-serif;background:#0a0a0a;color:#fff;display:flex}
+
+/* SIDE MENU */
+.side-menu{
+position:fixed;left:0;top:0;width:250px;height:100vh;
+background:#111;padding:20px;display:flex;flex-direction:column;
+justify-content:flex-start;align-items:flex-start;
+z-index:1000;
+transition: transform 0.3s ease;
+transform: translateX(-260px); /* hide by default */
+}
+.side-menu.open{transform: translateX(0);}
+.side-menu h1{color:#00bfff;margin-bottom:30px}
+.side-menu a{
+color:#fff;text-decoration:none;margin:10px 0;
+width:100%;
+transition:0.3s;
+}
+.side-menu a:hover{color:#00bfff}
+.side-menu .btn{margin-top:20px;width:100%;text-align:center}
+
+/* HAMBURGER */
+.hamburger{
+display:block;
+position:fixed;
+top:20px;left:20px;
+font-size:28px;
+color:#00bfff;
+cursor:pointer;
+z-index:1100;
+}
+
+/* MAIN CONTENT */
+main{
+margin-left:0;
+width:100%;
+transition: margin-left 0.3s ease;
+}
+
+/* HERO */
+.hero{
+position:relative;height:100vh;
+display:flex;flex-direction:column;
+justify-content:center;align-items:center;
+text-align:center;
+background-image: url('dtech image/your-original-background.jpg'); /* ORIGINAL BACKGROUND */
+background-size: cover;
+background-position: center top;
+background-repeat: no-repeat;
+}
+.hero video{
+position:absolute;width:100%;height:100%;
+object-fit:cover;z-index:-1
+}
+.hero h2{font-size:60px;color:#fff}
+
+/* SECTIONS */
+section{padding:80px 50px}
+h2{text-align:center;margin-bottom:40px}
+
+/* SERVICES */
+.services,.portfolio{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px
+}
+
+/* SERVICE CARD */
+.card{
+background:#111;
+padding:30px 20px;
+border-radius:15px;
+text-align:center;
+position:relative;
+overflow:hidden;
+transition:0.4s;
+}
+
+.card:hover{
+transform:translateY(-12px) scale(1.04);
+box-shadow:0 15px 35px rgba(0,191,255,0.3);
+}
+
+/* ICONS */
+.card i{
+font-size:40px;
+color:#00bfff;
+margin-bottom:15px;
+transition:0.4s;
+}
+
+.card:hover i{
+transform:scale(1.25) rotate(5deg);
+color:#00ffff;
+}
+
+/* LIGHT SWEEP */
+.card::before{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(120deg,transparent,rgba(0,191,255,0.3),transparent);
+transition:0.5s;
+}
+
+.card:hover::before{left:100%}
+
+/* PORTFOLIO */
+.portfolio img,
+.portfolio video{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.portfolio img:hover,
+.portfolio video:hover{
+transform:scale(1.05);
+}
+
+/* CATEGORY TABS */
+.portfolio-tabs{
+display:flex;justify-content:center;margin-bottom:30px;
+gap:15px;flex-wrap:wrap;
+}
+.portfolio-tabs button{
+background:#111;color:#fff;border:none;padding:10px 20px;
+border-radius:6px;cursor:pointer;transition:0.3s;
+}
+.portfolio-tabs button.active,
+.portfolio-tabs button:hover{background:#00bfff;color:#000;}
+
+/* CONTACT */
+.contact form{
+max-width:500px;margin:auto;
+display:flex;flex-direction:column;gap:15px
+}
+.contact input,.contact textarea,.contact select{
+padding:10px;border:none;border-radius:5px
+}
+
+/* FOOTER */
+footer{text-align:center;padding:20px;background:#111;width:100%}
+
+/* LIGHTBOX */
+.lightbox{
+position:fixed;top:0;left:0;width:100%;height:100%;
+background:rgba(0,0,0,0.9);
+display:none;justify-content:center;
+align-items:center;z-index:2000;
+flex-direction:column;
+}
+
+.lightbox img,
+.lightbox video{
+max-width:90%;max-height:80%;
+border-radius:10px;
+}
+
+.close-btn{
+position:absolute;top:20px;right:30px;
+font-size:40px;cursor:pointer;
+}
+
+/* QUOTE */
+.quote-modal{
+position:fixed;top:0;left:0;width:100%;height:100%;
+background:rgba(0,0,0,0.8);
+display:none;justify-content:center;
+align-items:center;z-index:3000;
+}
+
+.quote-box{
+background:#111;padding:30px;
+border-radius:10px;
+width:90%;max-width:400px;
+}
+
+.quote-box input,
+.quote-box select,
+.quote-box textarea{
+width:100%;margin:10px 0;
+padding:10px;border:none;border-radius:5px;
+}
+
+.success{
+color:#00ff88;text-align:center;margin-top:10px;
+}
+
+/* WHATSAPP */
+.whatsapp{
+position:fixed;bottom:20px;right:20px;
+background:#25D366;color:#fff;
+padding:15px;border-radius:50%;
+text-decoration:none;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* RESPONSIVE STYLING */
+@media screen and (max-width:1024px){
+body{flex-direction:column;}
+main{margin-left:0;width:100%;}
+}
+@media screen and (max-width:768px){
+.hero h2{font-size:40px;}
+.hero p{font-size:16px;}
+.services,.portfolio{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+.card{padding:20px;}
+.portfolio img, .portfolio video{height:180px;}
+}
+@media screen and (max-width:480px){
+.hero h2{font-size:32px;}
+.hero p{font-size:14px;}
+.services,.portfolio{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+.portfolio img, .portfolio video{height:150px;}
+.side-menu{flex-direction:column;align-items:flex-start;}
+.side-menu a{margin:5px 0;}
+.side-menu .btn{margin-top:10px;padding:8px;}
+section{padding:40px 15px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HAMBURGER -->
+<div class="hamburger" onclick="toggleMenu()">
+<i class="fas fa-bars"></i>
+</div>
+
+<!-- SIDE MENU -->
+<div class="side-menu" id="sideMenu">
+<h1>Dtech Made</h1>
+<a href="#">Home</a>
+<a href="#about">About</a>
+<a href="#services">Services</a>
+<a href="#portfolio">Portfolio</a>
+<a href="#contact">Contact</a>
+<button class="btn" onclick="openQuote()">Get a Quote</button>
+</div>
+
+<main>
+<section class="hero">
+<video autoplay muted loop>
+<source src="videos/D TECH MADE.mp4">
+</video>
+<h2>DTECH Made</h2>
+<p>Home of Digital & Creative Solutions</p>
+<button class="btn" onclick="scrollToPortfolio()">View Our Work</button>
+</section>
+
+<section id="about">
+<h2>About Us</h2>
+<p style="text-align:center;max-width:700px;margin:auto">
+DTECH Made is a creative company specializing in software development, photography, videography, and digital media solutions.
+</p>
+</section>
+
+<section id="services">
+<h2>Our Services</h2>
+<div class="services">
+
+<div class="card">
+<i class="fas fa-code"></i>
+<h3>Software Development</h3>
+<p>Websites, systems & apps built professionally</p>
+</div>
+
+<div class="card">
+<i class="fas fa-camera-retro"></i>
+<h3>Photography</h3>
+<p>High-quality photos for events & branding</p>
+</div>
+
+<div class="card">
+<i class="fas fa-video"></i>
+<h3>Videography</h3>
+<p>Creative video production & editing</p>
+</div>
+
+<div class="card">
+<i class="fas fa-palette"></i>
+<h3>Graphic Design</h3>
+<p>Posters, flyers, logos & branding</p>
+</div>
+
+<div class="card">
+<i class="fas fa-film"></i>
+<h3>Media Production</h3>
+<p>Full creative production solutions</p>
+</div>
+
+</div>
+</section>
+
+<section id="portfolio">
+<h2>Portfolio</h2>
+
+<div class="portfolio-tabs">
+<button class="active" onclick="filterPortfolio('all', event)">All</button>
+<button onclick="filterPortfolio('images', event)">Images</button>
+<button onclick="filterPortfolio('videos', event)">Videos</button>
+<button onclick="filterPortfolio('graphics', event)">Graphics</button>
+<button onclick="filterPortfolio('software', event)">Software</button>
+</div>
+
+<div class="portfolio" id="portfolioItems">
+
+<!-- IMAGES -->
+<img class="images" src="dtech image/dtech img logo.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20240916_064327~2.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20240916_145411.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="dtech image/dtech img logo.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20240916_064327~2.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20240916_145411.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20240917_064229~2.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20240917_064915~2.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20240917_112943~2.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20240918_183821~3.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20240919_120033~2.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20241106_171946.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20250815_172703_HDR~2.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20250828_133208~2.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20251227_131509.jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20251227_131709(1).jpg" onclick="openLightbox(this.src)">
+<img class="images" src="images/20251227_163749.jpg" onclick="openLightbox(this.src)">
+<!-- ... dtech images ... -->
+
+<!-- VIDEOS -->
+<video class="videos" onclick="openVideo(this.querySelector('source').src)" muted>
+<source src="videos/copy_6629A9EE-D240-4663-8D4F-3B0F2068F02C.mov">
+<source src="videos/D TECH MADE.mp4">
+<source src="videos/lv_0_20241031205007.mp4">
+
+
+
+</video>
+
+
+<video class="videos" onclick="openVideo(this.querySelector('source').src)" muted>
+<source src="videos/copy_6629A9EE-D240-4663-8D4F-3B0F2068F02C.mov">
+</video>
+
+<video class="videos" onclick="openVideo(this.querySelector('source').src)" muted>
+<source src="videos/D TECH MADE.mp4">
+</video>
+
+
+<video class="videos" onclick="openVideo(this.querySelector('source').src)" muted>
+<source src="videos/lv_0_20241031205007.mp4">
+</video>
+
+</video>
+<!-- ... My videos ... -->
+
+<!-- GRAPHICS -->
+<img class="graphics" src="graphics/Red Modern & Minimal Church  Instagram Post_1742044056382.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/a23e12487b8f2e7baed01e7147024a31.png" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Black and Brown Church Conference Flyer_20250923_101733_0000.png" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Red Modern & Minimal Church  Instagram Post_1742044056382.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/3_20250930_120532_0002.png" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/_church poster template_1751386485542.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/A New Design_1738498252123_1.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/a23e12487b8f2e7baed01e7147024a31.png" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Beige Aesthetic Collage Motivational Quote Phone Wallpaper_20250801_204534_0000.png" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Black and Brown Church Conference Flyer_20250923_101733_0000.png" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Black Church Leadership Summit A2_1771666958598.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Blue Gradient Special Guest Star  Poster_20250807_074351_0000.png" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Brown Pastel Birthday Flyer  Square (1_1)_1758302668330.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/charity fund_1763754061464.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Church Flyer Template_1762858868906_1.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Colorful Youth Fellowship Church Service Flyer_1762500321299.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/D.png" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/donation flyer template_1754227911834.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/dtech img logo.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/good morning_1735823105977_1.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Green Modern & Minimal Picnic In The Park  Instagram Post_1756884209137.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Hotel Promotion_1770824805076.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/ignite your prayer service_1752516383137.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Ladies Hangout Event Flyer_1756877776052.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/New Year Greeting Card_1735672806426_1.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Red Abstract Church  Flyer (us Letter)_1733061787358.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Red Christmas Family Collages Instagram Story_1766171459906.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Red Modern & Minimal Church  Instagram Post_1742583990585.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/SUNDAY Church Flyer (3)_1744833439490.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/White Maximalist Happy Jamhuri Day Flyer (us Letter)_1733986729823_1.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Yellow and Blue Minimalist Music Concert Flyer_20251006_210817_0000.png" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/YOUTH NIGHT_1766238553971_1.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Youth service flyer_1743970861352_1.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Youth service_1742969290142_1.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Youth service_1743970126020_1.jpg" onclick="openLightbox(this.src)">
+<img class="graphics" src="graphics/Youth service_1743970942939_1.jpg" onclick="openLightbox(this.src)">
+
+
+<!-- ... My graphics ... -->
+
+<!-- SOFTWARE -->
+<div class="software card">Software Projects Placeholder</div>
+
+</div>
+</section>
+
+<section id="contact" class="contact">
+<h2>Contact Us</h2>
+<form>
+<input type="text" placeholder="Your Name" required>
+<input type="email" placeholder="Your Email" required>
+<textarea rows="5" placeholder="Your Message"></textarea>
+<button class="btn">Send</button>
+</form>
+</section>
+
+<footer>
+<p>© 2026 DTECH Made. All rights reserved.</p>
+</footer>
+
+<a class="whatsapp" href="https://wa.me/254754472036">💬</a>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<span class="close-btn">&times;</span>
+<img id="lightbox-img">
+<video id="lightbox-video" controls></video>
+</div>
+
+<!-- QUOTE MODAL -->
+<div class="quote-modal" id="quoteModal">
+<div class="quote-box">
+<h3>Request a Quote</h3>
+<input type="text" placeholder="Your Name">
+<input type="email" placeholder="Your Email">
+<select>
+<option>Select Service</option>
+<option>Software Development</option>
+<option>Photography</option>
+<option>Videography</option>
+<option>Graphic Design</option>
+</select>
+<input type="text" placeholder="Budget">
+<textarea placeholder="Project Details"></textarea>
+<button class="btn" onclick="submitQuote()">Submit</button>
+<p class="success" id="successMsg"></p>
+<button class="btn" onclick="closeQuote()">Close</button>
+</div>
+</div>
+
+<script>
+function scrollToPortfolio(){
+document.getElementById("portfolio").scrollIntoView({behavior:'smooth'});
+}
+
+/* LIGHTBOX */
+function openLightbox(src){
+document.getElementById("lightbox").style.display="flex";
+document.getElementById("lightbox-img").src=src;
+document.getElementById("lightbox-img").style.display="block";
+document.getElementById("lightbox-video").style.display="none";
+}
+
+function openVideo(src){
+let video=document.getElementById("lightbox-video");
+video.src=src;
+video.style.display="block";
+document.getElementById("lightbox-img").style.display="none";
+video.play();
+document.getElementById("lightbox").style.display="flex";
+}
+
+function closeLightbox(){
+document.getElementById("lightbox").style.display="none";
+document.getElementById("lightbox-video").pause();
+}
+
+/* QUOTE */
+function openQuote(){
+document.getElementById("quoteModal").style.display="flex";
+}
+
+function closeQuote(){
+document.getElementById("quoteModal").style.display="none";
+}
+
+function submitQuote(){
+document.getElementById("successMsg").innerText="✅ Quote request sent!";
+}
+
+/* PORTFOLIO FILTER */
+function filterPortfolio(category, event){
+let items=document.querySelectorAll('#portfolioItems > *');
+items.forEach(item=>{
+if(category==='all'){
+item.style.display='block';
+}else{
+item.style.display=item.classList.contains(category)?'block':'none';
+}
+});
+document.querySelectorAll('.portfolio-tabs button').forEach(btn=>btn.classList.remove('active'));
+event.target.classList.add('active');
+}
+
+/* HAMBURGER MENU TOGGLE */
+function toggleMenu(){
+document.getElementById('sideMenu').classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
+
+
+
